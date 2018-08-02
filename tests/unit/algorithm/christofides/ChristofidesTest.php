@@ -28,7 +28,7 @@ class ChristofidesTest extends TestCase
             ->AddEdgeByName('c', 'f', 2)
             ->AddEdgeByName('e', 'f', 1);
 
-        $this->Graphs[1] = new \TSP\Model\Graph(9, 'abcdefghi');
+        $this->Graphs[1] = new Graph(9, 'abcdefghi');
         $this->Graphs[1]->AddEdgeByName('a', 'b', 2)
             ->AddEdgeByName('b', 'c', 4)
             ->AddEdgeByName('c', 'd', 2)

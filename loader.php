@@ -16,3 +16,6 @@ require_once(__DIR__ . '/classes/algorithm/eulerCircuit/EulerCircuit.php');
 require_once(__DIR__ . '/classes/algorithm/spanningTree/SpanningTree.php');
 
 require_once(__DIR__ . '/classes/algorithm/perfectMatching/MinimumPerfectMatching.php');
+
+require_once(__DIR__ . '/classes/algorithm/glnpso/GLNPSO.php');
+require_once(__DIR__ . '/classes/algorithm/glnpso/Particle.php');
