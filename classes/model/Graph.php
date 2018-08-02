@@ -248,10 +248,29 @@ namespace TSP\Model {
         }
 
         /**
+         * @return bool
+         */
+        public function IsCompleteGraph() {
+            for ($vi = 0; $vi < $this->Vertices; $vi++) {
+                for ($vj = 0; $vj < $this->Vertices; $vj++) {
+                    if ($vi == $vj) {
+                        continue;
+                    }
+
+                    if (!$this->HasEdgeByVertices($vi, $vj)) {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        /**
          * @return string
          */
         public function __toString() {
-            $str = "Conceptual Graph\n  size: {$this->Vertices}\n  edges (" . count($this->Edges) . "):\n";
+            $str = "Graph\n  size: {$this->Vertices}\n  edges (" . count($this->Edges) . "):\n";
             foreach ($this->Edges as $edge) {
                 $str .= "    ({$this->GetVertexName($edge->GetVertices()[0])}, {$this->GetVertexName($edge->GetVertices()[1])}) => {$edge->GetWeight()}\n";
             }

@@ -3,7 +3,7 @@
 namespace model;
 
 use TSP\Model\Graph;
-use TSP\Model\SpanningTree;
+use TSP\Algorithm\SpanningTree;
 use PHPUnit\Framework\TestCase;
 
 class SpanningTreeTest extends TestCase

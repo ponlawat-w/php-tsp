@@ -1,6 +1,9 @@
 <?php
 
-namespace TSP\Model {
+namespace TSP\Algorithm {
+
+    use TSP\Model\Edge;
+    use TSP\Model\Graph;
 
     class SpanningTree {
 
@@ -34,7 +37,7 @@ namespace TSP\Model {
         public static function Create($graph) {
             $tree = new Graph($graph->GetVertices(), $graph->GetMapping());
             $tree->Edges = $graph->Edges;
-            usort($tree->Edges, function($edgeA, $edgeB) { return $edgeA->GetWeight() > $edgeB->GetWeight(); });
+            usort($tree->Edges, function(Edge $edgeA, Edge $edgeB) { return $edgeA->GetWeight() > $edgeB->GetWeight(); });
 
             $components = [];
             for ($v = 0; $v < $tree->GetVertices(); $v++) {
