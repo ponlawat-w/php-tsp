@@ -87,7 +87,7 @@ namespace TSP\Algorithm {
             $this->ApplyGlobalBest();
 
             for ($i = 0; $i < $this->Iteration; $i++) {
-                if ($i % 10 == 9 || $i == $this->Iteration - 1) {
+                if ($i % 100 == 99 || $i == $this->Iteration - 1) {
                     $show = $i + 1;
                     echo "\rIteration {$show} of {$this->Iteration}";
                 }
@@ -104,7 +104,7 @@ namespace TSP\Algorithm {
                     $velocity = 1 * $particle->Velocities[$v];
                     $velocity += $this->BestConstant * self::RandomDouble() * ($particle->GetPersonalBestPositionOfVertex($v) - $particle->GetPositionOfVertex($v));
                     $velocity += $this->LocalConstant * self::RandomDouble() * ($particle->GetLocalBestPositionOfVertex($v) - $particle->GetPositionOfVertex($v));
-                    $velocity += $this->NearConstant * self::RandomDouble() * ($particle->NearBestPositions[$v] - $particle->GetPositionOfVertex($v));
+//                    $velocity += $this->NearConstant * self::RandomDouble() * ($particle->NearBestPositions[$v] - $particle->GetPositionOfVertex($v));
                     $velocity += $this->GlobalConstant * self::RandomDouble() * ($this->GlobalBestPositions[$v] - $particle->GetPositionOfVertex($v));
 
                     $particle->Velocities[$v] = $velocity;
@@ -115,7 +115,7 @@ namespace TSP\Algorithm {
             }
             $this->ApplyGlobalBest();
             $this->ApplyLocalBest();
-            $this->ApplyNearBest();
+//            $this->ApplyNearBest();
         }
 
         private function ApplyLocalBest() {
