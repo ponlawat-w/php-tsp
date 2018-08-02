@@ -82,7 +82,7 @@ namespace TSP\Model {
          * @param int $weight
          * @return $this
          */
-        public function AddEdge($v1, $v2, $weight = 0) {
+        public function AddEdge($v1, $v2, $weight = 1) {
             $newEdge = new Edge($v1, $v2, $weight);
             if (!$this->HasEdge($newEdge)) {
                 $this->Edges[] = $newEdge;
@@ -97,7 +97,7 @@ namespace TSP\Model {
          * @param int $weight
          * @return $this
          */
-        public function AddEdgeByName($v1Name, $v2Name, $weight = 0) {
+        public function AddEdgeByName($v1Name, $v2Name, $weight = 1) {
             $v1 = $this->GetVertexValue($v1Name);
             $v2 = $this->GetVertexValue($v2Name);
 
@@ -264,6 +264,60 @@ namespace TSP\Model {
             }
 
             return true;
+        }
+
+        /**
+         * @param string[] $vertexNames
+         * @param bool $induced
+         * @return Graph
+         */
+        public function GetSubGraphByNames($vertexNames, $induced = false) {
+            $vertices = [];
+            foreach ($vertexNames as $vertexName) {
+                if (in_array($vertexName, $this->VerticesMapping)) {
+                    $vertices[] = $this->GetVertexValue($vertexName);;
+                }
+            }
+
+            return $this->GetSubGraph($vertices, $induced);
+        }
+
+        /**
+         * @param int[] $vertices
+         * @param bool $induced
+         * @return Graph
+         */
+        public function GetSubGraph($vertices, $induced = false) {
+            $subGraph = new Graph(count($vertices));
+            $newMapping = [];
+            foreach ($vertices as $vertex) {
+                $newMapping[] = $vertex;
+            }
+            $subGraph->SetMapping($newMapping);
+
+            $calculatedEdges = [];
+            foreach ($vertices as $vertex) {
+                foreach ($this->GetConnectingEdges($vertex) as $edge) {
+                    if (!in_array($edge->GetAnotherVertex($vertex), $vertices) && !in_array($edge, $calculatedEdges)) {
+                        continue;
+                    }
+
+                    $vertex1ValueInSubGraph = $subGraph->GetVertexValue($edge->GetVertices()[0]);
+                    $vertex2ValueInSubGraph = $subGraph->GetVertexValue($edge->GetVertices()[1]);
+                    $subGraph->AddEdge($vertex1ValueInSubGraph, $vertex2ValueInSubGraph, $edge->GetWeight());
+                    $calculatedEdges[] = $edge;
+                }
+            }
+
+            if (count($this->VerticesMapping) == $this->Vertices) {
+                $newMapping = [];
+                foreach ($vertices as $vertex) {
+                    $newMapping[$subGraph->GetVertexValue($vertex)] = $this->GetVertexName($vertex);
+                }
+                $subGraph->SetMapping($newMapping);
+            }
+
+            return $induced ? $subGraph->MakeCompleteGraph() : $subGraph;
         }
 
         /**

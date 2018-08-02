@@ -19,7 +19,7 @@ namespace TSP\Model {
          * @param int $v2
          * @param int $weight
          */
-        public function __construct($v1, $v2, $weight = 0) {
+        public function __construct($v1, $v2, $weight = 1) {
             $this->Vertices = [$v1, $v2];
             $this->Weight = $weight;
         }

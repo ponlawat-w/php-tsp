@@ -14,4 +14,10 @@ namespace TSP\Algorithm {
         }
     }
 
+    class OddDegreeEulerCircuitException extends \Exception {
+        public function __construct() {
+            parent::__construct('Cannot perform euler circuit from graph that contains odd-degree vertex');
+        }
+    }
+
 }
