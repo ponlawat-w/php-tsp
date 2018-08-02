@@ -44,6 +44,11 @@ namespace TSP\Algorithm {
         private $Graph;
 
         /**
+         * @var int $StartVertex
+         */
+        private $StartVertex;
+
+        /**
          * @var int[][] $AdjacencyMatrix
          */
         private $AdjacencyMatrix;
@@ -78,6 +83,8 @@ namespace TSP\Algorithm {
             for ($p = 0; $p < $particles; $p++) {
                 $this->Particles[] = new Particle($this->Graph, $startVertex);
             }
+
+            $this->StartVertex = $startVertex;
         }
 
         /**
@@ -101,6 +108,10 @@ namespace TSP\Algorithm {
         private function MoveParticles() {
             foreach ($this->Particles as $particleIndex => $particle) {
                 for ($v = 0; $v < $this->Graph->GetVertices(); $v++) {
+                    if ($v == $this->StartVertex) {
+                        continue;
+                    }
+
                     $velocity = 1 * $particle->Velocities[$v];
                     $velocity += $this->BestConstant * self::RandomDouble() * ($particle->GetPersonalBestPositionOfVertex($v) - $particle->GetPositionOfVertex($v));
                     $velocity += $this->LocalConstant * self::RandomDouble() * ($particle->GetLocalBestPositionOfVertex($v) - $particle->GetPositionOfVertex($v));

@@ -38,8 +38,8 @@ $graph->AddEdgeByName('a', 'b', 2)
 $christofides = new \TSP\Algorithm\Christofides($graph, $graph->GetVertexValue('g'));
 echo 'Christofides: ' . $christofides . ': ' . $christofides->GetTotalWeight() . PHP_EOL . PHP_EOL;
 
-$glnpso = new \TSP\Algorithm\GLNPSO($graph, $graph->GetVertexValue('g'), 200);
-$glnpso->Iteration = 2000;
+$glnpso = new \TSP\Algorithm\GLNPSO($graph, $graph->GetVertexValue('g'), 500);
+$glnpso->Iteration = 5000;
 echo 'Before ' . $glnpso;
 $glnpso->Calculate();
 echo 'After ' . $glnpso;
