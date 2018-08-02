@@ -20,4 +20,10 @@ namespace TSP\Algorithm {
         }
     }
 
+    class PathStepIncorrectFromToException extends \Exception {
+        public function __construct() {
+            parent::__construct('Origin and destination vertices do not correspond to given edge');
+        }
+    }
+
 }

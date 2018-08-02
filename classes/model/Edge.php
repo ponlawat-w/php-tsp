@@ -6,7 +6,7 @@ namespace TSP\Model {
         /**
          * @var int[] $Vertices
          */
-        private $Vertices;
+        protected $Vertices;
 
         /**
          * @var int $Weight

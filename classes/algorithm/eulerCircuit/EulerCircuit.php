@@ -24,9 +24,10 @@ namespace TSP\Algorithm {
         /**
          * EulerCircuit constructor.
          * @param Graph $graph
+         * @param int $firstVertex
          * @throws OddDegreeEulerCircuitException
          */
-        public function __construct($graph) {
+        public function __construct($graph, $firstVertex = null) {
             for ($v = 0; $v < $graph->GetVertices(); $v++) {
                 if ($graph->GetDegree($v) % 2) {
                     throw new OddDegreeEulerCircuitException();
@@ -37,14 +38,14 @@ namespace TSP\Algorithm {
             $this->PathEdges = [];
             $this->VertexOrder = [];
 
-            $this->Calculate();
+            $this->Calculate($firstVertex);
         }
 
         /**
-         *
+         * @param int $firstVertex
          */
-        private function Calculate() {
-            $startVertex = $this->GetFirstVertex();
+        private function Calculate($firstVertex) {
+            $startVertex = is_null($firstVertex) ? $this->GetFirstVertex() : $firstVertex;
             $subCircuit = [];
             $subOrder = [$startVertex];
 

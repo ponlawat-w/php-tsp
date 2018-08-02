@@ -16,8 +16,6 @@ $graph->AddEdgeByName('a', 'b')
 try {
     $eulerCircuit = new \TSP\Algorithm\EulerCircuit($graph);
 
-    var_dump($eulerCircuit->GetVertexOrder());
-
 } catch(\TSP\Algorithm\OddDegreeEulerCircuitException $ex) {
     echo 'Exception Thrown!' . PHP_EOL;
 }

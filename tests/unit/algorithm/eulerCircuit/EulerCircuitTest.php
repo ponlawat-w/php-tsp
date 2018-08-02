@@ -43,7 +43,6 @@ class EulerCircuitTest extends TestCase
             ->AddEdgeByName('c', 'b', 1);
         try {
             $euler = new EulerCircuit($graph);
-            var_dump($euler->GetVertexOrder());
             $this->assertEquals(count($graph->Edges), count($euler->GetPathEdges()));
 
         } catch (OddDegreeEulerCircuitException $ex) {
