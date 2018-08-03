@@ -3,6 +3,7 @@
 namespace TSP\Algorithm {
 
     use TSP\Algorithm\Christofides\PathStep;
+    use TSP\Model\Edge;
     use TSP\Model\Graph;
 
     class Christofides {
@@ -67,7 +68,7 @@ namespace TSP\Algorithm {
                 $v2 = $this->Graph->GetVertexValue($v2Name);
 
                 $edge = $this->Graph->GetEdge($v1, $v2);
-                $newGraph->Edges[] = $edge;
+                $newGraph->Edges[] = new Edge($edge->GetVertices()[0], $edge->GetVertices()[1], $edge->GetWeight());
             }
 
             return $newGraph;

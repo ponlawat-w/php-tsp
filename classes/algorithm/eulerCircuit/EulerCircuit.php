@@ -133,7 +133,7 @@ namespace TSP\Algorithm {
          */
         private function GetNextEdge($vertex, $currentPath) {
             foreach ($this->Graph->GetConnectingEdges($vertex) as $edge) {
-                if (!in_array($edge, $this->PathEdges) && !in_array($edge, $currentPath)) {
+                if (!in_array($edge, $this->PathEdges, true) && !in_array($edge, $currentPath, true)) {
                     return $edge;
                 }
             }
