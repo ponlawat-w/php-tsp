@@ -163,6 +163,16 @@ namespace TSP\Model {
         }
 
         /**
+         * @param int[] $vertices
+         * @return string[]
+         */
+        public function GetVerticesNames($vertices) {
+            return array_map(function($vertex) {
+                return $this->GetVertexName($vertex);
+            }, $vertices);
+        }
+
+        /**
          * @param string $vertexName
          * @return int
          */
@@ -174,6 +184,16 @@ namespace TSP\Model {
             }
 
             return -1;
+        }
+
+        /**
+         * @param string[] $verticesNames
+         * @return int[]
+         */
+        public function GetVerticesValues($verticesNames) {
+            return array_map(function($vertexName) {
+                return $this->GetVertexValue($vertexName);
+            }, $verticesNames);
         }
 
         /**

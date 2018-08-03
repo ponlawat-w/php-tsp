@@ -12,9 +12,9 @@ namespace TSP\Algorithm {
         public $MaxPrintedParticle = 5;
 
         /**
-         * @var double $BestConstant
+         * @var double $PersonalConstant
          */
-        public $BestConstant = 1.0;
+        public $PersonalConstant = 1.0;
         /**
          * @var double $GlobalConstant
          */
@@ -37,6 +37,11 @@ namespace TSP\Algorithm {
          * @var int $Iteration
          */
         public $Iteration = 500;
+
+        /**
+         * @var bool $PrintCalculationStatus
+         */
+        public $PrintCalculationStatus = true;
 
         /**
          * @var Graph $Graph
@@ -94,13 +99,15 @@ namespace TSP\Algorithm {
             $this->ApplyGlobalBest();
 
             for ($i = 0; $i < $this->Iteration; $i++) {
-                if ($i % 100 == 99 || $i == $this->Iteration - 1) {
+                if ($this->PrintCalculationStatus && ($i % 100 == 99 || $i == $this->Iteration - 1)) {
                     $show = $i + 1;
-                    echo "\rIteration {$show} of {$this->Iteration}";
+                    echo "\rIteration {$show} of {$this->Iteration} (GlobalBest = {$this->GlobalBestCost})";
                 }
                 $this->MoveParticles();
             }
-            echo PHP_EOL;
+            if ($this->PrintCalculationStatus) {
+                echo PHP_EOL;
+            }
 
             return $this;
         }
@@ -113,7 +120,7 @@ namespace TSP\Algorithm {
                     }
 
                     $velocity = 1 * $particle->Velocities[$v];
-                    $velocity += $this->BestConstant * self::RandomDouble() * ($particle->GetPersonalBestPositionOfVertex($v) - $particle->GetPositionOfVertex($v));
+                    $velocity += $this->PersonalConstant * self::RandomDouble() * ($particle->GetPersonalBestPositionOfVertex($v) - $particle->GetPositionOfVertex($v));
                     $velocity += $this->LocalConstant * self::RandomDouble() * ($particle->GetLocalBestPositionOfVertex($v) - $particle->GetPositionOfVertex($v));
 //                    $velocity += $this->NearConstant * self::RandomDouble() * ($particle->NearBestPositions[$v] - $particle->GetPositionOfVertex($v));
                     $velocity += $this->GlobalConstant * self::RandomDouble() * ($this->GlobalBestPositions[$v] - $particle->GetPositionOfVertex($v));
@@ -133,6 +140,9 @@ namespace TSP\Algorithm {
             $particleAmount = count($this->Particles);
             for ($n = 0; $n < $this->NeighbourAmount; $n++) {
                 $firstIndex = $n * $this->NeighbourAmount;
+                if ($firstIndex > count($this->Particles) - 1) {
+                    continue;
+                }
                 $lastIndex = (($n + 1) * $this->NeighbourAmount) - 1;
                 $lastIndex = ($lastIndex >= $particleAmount || ($n == $this->NeighbourAmount && $lastIndex < $particleAmount)) ?
                     $particleAmount - 1 : $lastIndex;
@@ -214,12 +224,22 @@ namespace TSP\Algorithm {
             }
         }
 
+        public function GetBestCost() {
+            return $this->GlobalBestCost;
+        }
+
+        public function GetBestOrder() {
+            $bestPositions = $this->GlobalBestPositions;
+            asort($bestPositions, SORT_ASC);
+            $order = array_keys($bestPositions);
+            $order[] = $order[0];
+            return $order;
+        }
+
         /**
          * @return string
          */
         public function __toString() {
-            $graph = $this->Graph;
-
             $adjacency = $this->AdjacencyMatrix;
             $particles = $this->Particles;
             usort($particles, function($particleA, $particleB) use ($adjacency) {
@@ -231,18 +251,15 @@ namespace TSP\Algorithm {
             for ($p = 0; $p < $this->MaxPrintedParticle; $p++) {
                 $particle = $particles[$p];
                 $vertexOrder = $particle->GetVertexOrder();
-                $vertexNameOrder = array_map(function($vertex) use ($graph) { return $graph->GetVertexName($vertex); }, $vertexOrder);
+                $vertexNameOrder = $this->Graph->GetVerticesNames($vertexOrder);
                 $str .= implode(' -> ', $vertexNameOrder);
                 $str .= ': ' . $particle->GetTotalCost($adjacency);
                 $str .= PHP_EOL;
             }
 
             if ($this->GlobalBestCost) {
-                $globalBestPositions = $this->GlobalBestPositions;
-                asort($globalBestPositions, SORT_ASC);
-                $globalBestVertexOrder = array_keys($globalBestPositions);
-                $globalBestVertexOrder[] = $globalBestVertexOrder[0];
-                $globalBestVertexNameOrder = array_map(function($vertex) use ($graph) { return $graph->GetVertexName($vertex); }, $globalBestVertexOrder);
+                $globalBestVertexOrder = $this->GetBestOrder();
+                $globalBestVertexNameOrder = $this->Graph->GetVerticesNames($globalBestVertexOrder);
                 $str .= 'Global: ';
                 $str .= implode(' -> ', $globalBestVertexNameOrder);
                 $str .= ": {$this->GlobalBestCost}";

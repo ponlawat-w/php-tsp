@@ -39,7 +39,7 @@ $christofides = new \TSP\Algorithm\Christofides($graph, $graph->GetVertexValue('
 echo 'Christofides: ' . $christofides . ': ' . $christofides->GetTotalWeight() . PHP_EOL . PHP_EOL;
 
 $glnpso = new \TSP\Algorithm\GLNPSO($graph, $graph->GetVertexValue('g'), 500);
-$glnpso->Iteration = 5000;
+$glnpso->Iteration = 1000;
 echo 'Before ' . $glnpso;
 $glnpso->Calculate();
 echo 'After ' . $glnpso;
