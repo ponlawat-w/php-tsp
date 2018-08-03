@@ -30,3 +30,5 @@ require_once(__DIR__ . '/classes/algorithm/zddFrontier/ZddFrontierPathFinding.ph
 require_once(__DIR__ . '/classes/algorithm/zddFrontier/model/ZddNode.php');
 require_once(__DIR__ . '/classes/algorithm/zddFrontier/hamilton/ZddFrontierHamilton.php');
 require_once(__DIR__ . '/classes/algorithm/zddFrontier/hamilton/ChristofidesZddFrontier.php');
+
+require_once(__DIR__ . '/classes/io/CSV.php');
