@@ -13,7 +13,7 @@ $graph->AddEdgeByName('a', 'b', 1)
 
 try {
     $christofides = new \TSP\Algorithm\Christofides($graph);
-    echo $christofides . PHP_EOL;
+    echo $christofides . ' = ' . $christofides->GetTotalWeight() . PHP_EOL;
 } catch (Exception $ex) {
     echo $ex->getMessage() . PHP_EOL;
     exit;
@@ -39,7 +39,7 @@ $graph->AddEdgeByName('a', 'b', 2)
 
 try {
     $christofides = new \TSP\Algorithm\Christofides($graph, $graph->GetVertexValue('g'));
-    echo $christofides . PHP_EOL;
+    echo $christofides . ' = ' . $christofides->GetTotalWeight() . PHP_EOL;
 } catch (Exception $ex) {
     echo $ex->getMessage() . PHP_EOL;
     exit;

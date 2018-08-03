@@ -11,13 +11,13 @@ $graph->AddEdgeByName('a', 'b', 1)
     ->AddEdgeByName('c', 'f', 2)
     ->AddEdgeByName('e', 'f', 1);
 
-$glnpso = new \TSP\Algorithm\GLNPSO($graph, 0, 100);
-$glnpso->Iteration = 500;
-echo 'Before ' . $glnpso;
-$glnpso->Calculate();
-echo 'After ' . $glnpso;
+$zdd = new \TSP\Algorithm\ChristofidesZddFrontier($graph, $graph->GetVertexValue('a'));
 
-echo PHP_EOL . '---' . PHP_EOL . PHP_EOL;
+echo $zdd . ' = ' . $zdd->GetTotalWeight() . PHP_EOL;
+
+echo '----' . PHP_EOL;
+
+unset($christofides, $zdd);
 
 $graph = new \TSP\Model\Graph(9, 'abcdefghi');
 $graph->AddEdgeByName('a', 'b', 2)
@@ -35,11 +35,7 @@ $graph->AddEdgeByName('a', 'b', 2)
     ->AddEdgeByName('h', 'c', 2)
     ->AddEdgeByName('i', 'e', 2)
     ->AddEdgeByName('h', 'd', 8);
-$christofides = new \TSP\Algorithm\Christofides($graph, $graph->GetVertexValue('i'));
-echo 'Christofides: ' . $christofides . ' = ' . $christofides->GetTotalWeight() . PHP_EOL . PHP_EOL;
 
-$glnpso = new \TSP\Algorithm\GLNPSO($graph, $graph->GetVertexValue('i'), 500);
-$glnpso->Iteration = 1000;
-echo 'Before ' . $glnpso;
-$glnpso->Calculate();
-echo 'After ' . $glnpso;
+$zdd = new \TSP\Algorithm\ChristofidesZddFrontier($graph, $graph->GetVertexValue('f'));
+
+echo $zdd . ' = ' . $zdd->GetTotalWeight() . PHP_EOL;

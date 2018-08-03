@@ -2,8 +2,12 @@
 
 require_once(__DIR__ . '/classes/exceptions/exceptions.php');
 
-require_once(__DIR__ . '/classes/model/Graph.php');
-require_once(__DIR__ . '/classes/model/Edge.php');
+require_once(__DIR__ . '/classes/model/graph/Graph.php');
+require_once(__DIR__ . '/classes/model/graph/Edge.php');
+
+require_once(__DIR__ . '/classes/model/binaryTree/BinaryNode.php');
+require_once(__DIR__ . '/classes/model/binaryTree/BinaryTree.php');
+
 
 require_once(__DIR__ . '/classes/algorithm/christofides/Christofides.php');
 require_once(__DIR__ . '/classes/algorithm/christofides/PathStep.php');
@@ -21,3 +25,8 @@ require_once(__DIR__ . '/classes/algorithm/glnpso/GLNPSO.php');
 require_once(__DIR__ . '/classes/algorithm/glnpso/Particle.php');
 
 require_once(__DIR__ . '/classes/algorithm/greedy/GreedyWeight.php');
+
+require_once(__DIR__ . '/classes/algorithm/zddFrontier/ZddFrontierPathFinding.php');
+require_once(__DIR__ . '/classes/algorithm/zddFrontier/model/ZddNode.php');
+require_once(__DIR__ . '/classes/algorithm/zddFrontier/hamilton/ZddFrontierHamilton.php');
+require_once(__DIR__ . '/classes/algorithm/zddFrontier/hamilton/ChristofidesZddFrontier.php');

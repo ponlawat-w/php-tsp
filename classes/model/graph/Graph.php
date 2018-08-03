@@ -3,7 +3,6 @@
 namespace TSP\Model {
 
     use TSP\Algorithm\Dijkstra;
-    use TSP\Algorithm\MinimumPerfectMatching;
 
     class Graph {
         /**
