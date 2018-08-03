@@ -19,3 +19,5 @@ require_once(__DIR__ . '/classes/algorithm/perfectMatching/MinimumPerfectMatchin
 
 require_once(__DIR__ . '/classes/algorithm/glnpso/GLNPSO.php');
 require_once(__DIR__ . '/classes/algorithm/glnpso/Particle.php');
+
+require_once(__DIR__ . '/classes/algorithm/greedy/GreedyWeight.php');

@@ -112,16 +112,7 @@ namespace TSP\Algorithm {
          * @return string
          */
         public function __toString() {
-            if (!count($this->PathEdges)) {
-                return '';
-            }
-
-            $vertices = [$this->Graph->GetVertexName($this->PathEdges[0]->GetVertices()[0])];
-            foreach ($this->PathEdges as $edge) {
-                $vertices[] = $this->Graph->GetVertexName($edge->GetVertices()[1]);
-            }
-
-            return implode(' -> ', $vertices);
+            return implode(' -> ', $this->Graph->GetVerticesNames($this->GetVertexOrder()));
         }
 
         /**

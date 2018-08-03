@@ -11,11 +11,14 @@ $graph->AddEdgeByName('a', 'b', 1)
     ->AddEdgeByName('c', 'f', 2)
     ->AddEdgeByName('e', 'f', 1);
 
-$glnpso = new \TSP\Algorithm\GLNPSO($graph, 0, 100);
-$glnpso->Iteration = 500;
-echo 'Before ' . $glnpso;
-$glnpso->Calculate();
-echo 'After ' . $glnpso;
+
+echo 'GRAPH 1' . PHP_EOL;
+
+$greedy = new \TSP\Algorithm\GreedyWeight($graph, $graph->GetVertexValue('a'));
+echo 'Greedy: ' . $greedy . ' = ' . $greedy->GetTotalWeight() . PHP_EOL;
+
+$christofides = new \TSP\Algorithm\Christofides($graph, $graph->GetVertexValue('a'));
+echo 'Christofides: ' . $christofides . ' = ' . $christofides->GetTotalWeight() . PHP_EOL;
 
 echo PHP_EOL . '---' . PHP_EOL . PHP_EOL;
 
@@ -35,11 +38,12 @@ $graph->AddEdgeByName('a', 'b', 2)
     ->AddEdgeByName('h', 'c', 2)
     ->AddEdgeByName('i', 'e', 2)
     ->AddEdgeByName('h', 'd', 8);
-$christofides = new \TSP\Algorithm\Christofides($graph, $graph->GetVertexValue('i'));
-echo 'Christofides: ' . $christofides . ': ' . $christofides->GetTotalWeight() . PHP_EOL . PHP_EOL;
 
-$glnpso = new \TSP\Algorithm\GLNPSO($graph, $graph->GetVertexValue('i'), 500);
-$glnpso->Iteration = 1000;
-echo 'Before ' . $glnpso;
-$glnpso->Calculate();
-echo 'After ' . $glnpso;
+
+echo 'GRAPH 2' . PHP_EOL;
+
+$greedy = new \TSP\Algorithm\GreedyWeight($graph, $graph->GetVertexValue('i'));
+echo 'Greedy: ' . $greedy . ' = ' . $greedy->GetTotalWeight() . PHP_EOL;
+
+$christofides = new \TSP\Algorithm\Christofides($graph, $graph->GetVertexValue('i'));
+echo 'Christofides: ' . $christofides . ' = ' . $christofides->GetTotalWeight() . PHP_EOL;
