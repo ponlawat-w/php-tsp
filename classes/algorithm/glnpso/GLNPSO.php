@@ -79,7 +79,7 @@ namespace TSP\Algorithm {
          * @param int $particles
          */
         public function __construct($graph, $startVertex = 0, $particles = 100) {
-            $this->Graph = $graph;
+            $this->Graph = clone $graph;
             $this->Graph->MakeCompleteGraph();
             $this->AdjacencyMatrix = $this->Graph->GetAdjacencyMatrix();
 
@@ -99,7 +99,7 @@ namespace TSP\Algorithm {
             $this->ApplyGlobalBest();
 
             for ($i = 0; $i < $this->Iteration; $i++) {
-                if ($this->PrintCalculationStatus && ($i % 100 == 99 || $i == $this->Iteration - 1)) {
+                if ($this->PrintCalculationStatus && (!$i || $i % 100 == 99 || $i == $this->Iteration - 1)) {
                     $show = $i + 1;
                     echo "\rIteration {$show} of {$this->Iteration} (GlobalBest = {$this->GlobalBestCost})";
                 }
@@ -224,11 +224,17 @@ namespace TSP\Algorithm {
             }
         }
 
-        public function GetBestCost() {
+        /**
+         * @return int
+         */
+        public function GetTotalWeight() {
             return $this->GlobalBestCost;
         }
 
-        public function GetBestOrder() {
+        /**
+         * @return int[]
+         */
+        public function GetVertexOrder() {
             $bestPositions = $this->GlobalBestPositions;
             asort($bestPositions, SORT_ASC);
             $order = array_keys($bestPositions);
@@ -258,7 +264,7 @@ namespace TSP\Algorithm {
             }
 
             if ($this->GlobalBestCost) {
-                $globalBestVertexOrder = $this->GetBestOrder();
+                $globalBestVertexOrder = $this->GetVertexOrder();
                 $globalBestVertexNameOrder = $this->Graph->GetVerticesNames($globalBestVertexOrder);
                 $str .= 'Global: ';
                 $str .= implode(' -> ', $globalBestVertexNameOrder);

@@ -32,6 +32,6 @@ class GLNPSOTest extends TestCase
         $glnpso->Iteration = 500;
         $glnpso->PrintCalculationStatus = false;
         $glnpso->Calculate();
-        $this->assertLessThan($graph->GetTotalWeight(), $glnpso->GetBestCost());
+        $this->assertLessThan($graph->GetTotalWeight(), $glnpso->GetTotalWeight());
     }
 }

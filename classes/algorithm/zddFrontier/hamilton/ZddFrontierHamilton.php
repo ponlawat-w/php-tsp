@@ -9,6 +9,12 @@ namespace TSP\Algorithm {
     use TSP\Model\Graph;
 
     class ZddFrontierHamilton extends ZddFrontierPathFinding {
+
+        /**
+         * @var bool $PrintStatus
+         */
+        public static $PrintStatus = true;
+
         /**
          * @var int[] $BestVertexOrder
          */
@@ -85,13 +91,15 @@ namespace TSP\Algorithm {
                         $node->SetChild($isUsed, $this->TerminalTrue);
                         $node->EndsWithTrue = true;
 
-                        echo $this . ' = ' . $this->BestWeight . PHP_EOL;
+                        if (self::$PrintStatus) {
+                            echo PHP_EOL . $this . ' = ' . $this->BestWeight . PHP_EOL;
+                        }
                     } else {
                         $node->SetChild($isUsed, $this->TerminalFalse);
                     }
                 }
 
-                if (!$node->EndsWithTrue) {
+                if ($node->HasTwoChildren() && !$node->EndsWithTrue) {
                     unset($node);
                     return $this->TerminalFalse;
                 }
@@ -204,12 +212,22 @@ namespace TSP\Algorithm {
 
         /**
          * @param ZddNode $node
+         * @param int $index
          * @return string
          */
-        public function GetNodeStatus($node) {
+        public function GetNodeStatus($node, $index) {
             $str = '';
-            for ($e = 0; $e < count($this->Graph->Edges); $e++) {
+
+            $max = $index < 50 ? $index : 50;
+            for ($e = 0; $e < $max; $e++) {
                 $str .= in_array($e, $node->UsedEdges) ? '1' : '0';
+            }
+
+            if ($max != $index) {
+                $str .= '...';
+                for ($e = $index - 50; $e <= $index; $e++) {
+                    $str .= in_array($e, $node->UsedEdges) ? '1' : '0';
+                }
             }
 
             return $str;
